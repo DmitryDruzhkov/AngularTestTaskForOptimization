@@ -1,17 +1,9 @@
-import { Component } from '@angular/core';
-import { DataEntitieService } from './services/data.service';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent {
-  public tasks: any[] = [];
-
-  constructor(private dataEntitieService: DataEntitieService) {
-    this.dataEntitieService.tasks.subscribe((items) => {
-      this.tasks = [...items];
-    });
-  }
-}
+export class AppComponent {}

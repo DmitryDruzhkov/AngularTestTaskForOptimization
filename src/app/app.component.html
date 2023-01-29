@@ -1,8 +1,21 @@
-<div *ngFor="let task of tasks">
-  <div>
-    {{ task.title }}
+<div class="content">
+  <div class="main__navigation">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link
+        [routerLink]="'/'"
+        routerLinkActive="main__navigation-active">
+        Все задачи
+      </a>
+      <a mat-tab-link
+        [routerLink]="'/new'"
+        routerLinkActive="main__navigation-active">
+        Новая задача
+      </a>
+    </nav>
   </div>
-  <div>
-    {{ task.description }}
-  </div>
+  
+  <router-outlet></router-outlet>
+
+  
+  
 </div>

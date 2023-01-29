@@ -1,0 +1,13 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+}
+
+mat-card {
+  margin-bottom: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+}
