@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DataEntitieService } from 'src/app/services/data.service';
+import { DataEntitieService } from '../../services/data.service';
 
 @Component({
   selector: 'app-new-task',

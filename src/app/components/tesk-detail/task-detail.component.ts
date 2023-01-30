@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataEntitieService } from 'src/app/services/data.service';
+import { DataEntitieService } from '../../services/data.service';
 
 @Component({
   selector: 'app-task-detail',
