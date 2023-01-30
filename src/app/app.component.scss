@@ -11,3 +11,16 @@ mat-card {
 mat-form-field {
   width: 100%;
 }
+
+.main-navigation {
+  margin-bottom: 32px;
+
+  &__active {
+    border-bottom: 2px solid !important;
+    border-color: #3f51b5 !important;
+
+    .mdc-tab__text-label {
+      color: #3f51b5 !important;
+    }
+  }
+}

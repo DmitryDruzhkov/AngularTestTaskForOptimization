@@ -15,6 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NewTaskComponent } from './components/new-task/new-task.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskDetailComponent } from './components/tesk-detail/task-detail.component';
+import { TaskSearchComponent } from './components/task-search/task-search.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TaskDetailComponent } from './components/tesk-detail/task-detail.compon
     NewTaskComponent,
     TaskListComponent,
     TaskDetailComponent,
+    TaskSearchComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,15 +1,23 @@
 <div class="content">
-  <div class="main__navigation">
+  <div class="main-navigation">
     <nav mat-tab-nav-bar>
       <a mat-tab-link
         [routerLink]="'/'"
-        routerLinkActive="main__navigation-active">
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="main-navigation__active">
         Все задачи
       </a>
       <a mat-tab-link
         [routerLink]="'/new'"
-        routerLinkActive="main__navigation-active">
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="main-navigation__active">
         Новая задача
+      </a>
+      <a mat-tab-link
+        [routerLink]="'/search'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="main-navigation__active">
+        Поиск
       </a>
     </nav>
   </div>

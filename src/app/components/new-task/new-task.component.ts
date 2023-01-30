@@ -8,15 +8,16 @@ import { DataEntitieService } from 'src/app/services/data.service';
   templateUrl: './new-task.component.html',
   styleUrls: ['./new-task.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  providers: [DataEntitieService],
 })
 export class NewTaskComponent {
-  descriptionFormControl = new FormControl('');
+  taskTitleFormControl = new FormControl('');
 
   constructor(private dataEntitieService: DataEntitieService, private router: Router) {}
 
   onCreateTask() {
     const newTask = {
-      title: this.descriptionFormControl.value,
+      title: this.taskTitleFormControl.value,
       description: '',
       expired: new Date().setDate(new Date().getDate() + 1)
     }
