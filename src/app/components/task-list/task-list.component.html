@@ -1,6 +1,6 @@
 <mat-card *ngFor="let task of tasks">
-  <mat-card-content matBadge="!" matBadgePosition="before" [matBadgeColor]="getTaskColor(task)">
-    <mat-form-field class="example-full-width">
+  <mat-card-content>
+    <mat-form-field matBadge="!" matBadgePosition="before" [matBadgeColor]="getTaskColor(task)" class="example-full-width">
       <mat-label>Имя задачи</mat-label>
       <input matInput placeholder="Имя задачи" [value]="getTaskTitle(task)">
     </mat-form-field>
