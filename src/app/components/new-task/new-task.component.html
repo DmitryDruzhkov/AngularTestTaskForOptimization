@@ -1,6 +1,17 @@
 <form class="example-form">
   <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Новая задача</mat-label>
-    <input matInput #todoInput (focusout)="onCreateTask()" (keyup.enter)="onCreateTask()" [formControl]="taskTitleFormControl" placeholder="Нужно сделать..." cdkFocusInitial>
+    <mat-label>Название задачи</mat-label>
+    <input matInput #todoInput [formControl]="taskTitleFormControl" placeholder="Нужно сделать..." cdkFocusInitial>
   </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Описание задача</mat-label>
+    <input matInput #todoInput [formControl]="taskDescriptionFormControl" placeholder="Нужно сделать..." cdkFocusInitial>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Тип задачи</mat-label>
+    <mat-select [formControl]="taskTypeFormControl">
+      <mat-option *ngFor="let topping of taskTypes" [value]="topping">{{topping}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button (click)="onCreateTask()" mat-raised-button color="primary">Создать</button>
 </form>

@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { getTaskTitleByExpired } from '../../shared/task-helper';
 import { DataEntitieService } from '../../services/data.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class TaskDetailComponent {
   }
 
   getTaskTitle(task: any) {
-    return new Date().setHours(0,0,0,0) == new Date(task.expired).setHours(0,0,0,0) ? `Твоя задача на сегодня: ${task.title}` : task.title;
+    return getTaskTitleByExpired(task);
   }
 
   onDeleteTask(taskId: any) {

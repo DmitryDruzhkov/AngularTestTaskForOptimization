@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { getTaskTitleByExpired } from '../../shared/task-helper';
 import { DataEntitieService } from '../../services/data.service';
+import { TaskType } from '../../shared/constants';
 
 @Component({
   selector: 'app-task-list',
@@ -18,11 +20,22 @@ export class TaskListComponent {
   }
 
   getTaskTitle(task: any) {
-    return new Date().setHours(0,0,0,0) == new Date(task.expired).setHours(0,0,0,0) ? `Твоя задача на сегодня: ${task.title}` : task.title;
+    return getTaskTitleByExpired(task);
+  }
+
+  getTaskColor(task: any) {
+    if (task.type === TaskType.BUG) {
+      return "warn";
+    } else if (task.type === TaskType.FEATURE) {
+      return "primary";
+    } else if (task.type === TaskType.TECH_DOLG) {
+      return "accent";
+    }
+    return "primary";
   }
 
   onDeleteTask(taskId: any) {
-    this.dataEntitieService.tasks.next(this.dataEntitieService.tasks.getValue().filter((item: any) => item.id !== taskId))
+    this.dataEntitieService.tasks.next(this.dataEntitieService.tasks.getValue().filter((item: any) => item.id !== taskId));
   }
 
   onOpenTask(taskId: any) {

@@ -1,5 +1,5 @@
 <mat-card *ngFor="let task of tasks">
-  <mat-card-content>
+  <mat-card-content matBadge="!" matBadgePosition="before" [matBadgeColor]="getTaskColor(task)">
     <mat-form-field class="example-full-width">
       <mat-label>Имя задачи</mat-label>
       <input matInput placeholder="Имя задачи" [value]="getTaskTitle(task)">
@@ -9,8 +9,8 @@
       <input matInput placeholder="Описание задачи" [value]="task.description">
     </mat-form-field>
     <mat-card-actions>
-      <button (click)="onOpenTask(task.id)" mat-button>Детали</button>
-      <button (click)="onDeleteTask(task.id)" mat-button>Удалить</button>
+      <button (click)="onOpenTask(task.id)" mat-raised-button>Детали</button>
+      <button (click)="onDeleteTask(task.id)" mat-raised-button>Удалить</button>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>
