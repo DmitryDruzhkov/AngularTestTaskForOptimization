@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { getTaskTitleByExpired } from '../../shared/task-helper';
 import { DataEntitieService } from '../../services/data.service';
 import { TaskType } from '../../shared/constants';
+import { from, map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-task-list',
@@ -12,15 +13,28 @@ import { TaskType } from '../../shared/constants';
 })
 export class TaskListComponent {
   tasks: any[] = [];
+  onDestroy$: Subject<null> = new Subject();
 
   constructor(private dataEntitieService: DataEntitieService, private router: Router) {
-    this.dataEntitieService.tasks.subscribe((items) => {
+    this.dataEntitieService.tasks.pipe(
+      takeUntil(this.onDestroy$),
+      switchMap((tasks) => of(tasks).pipe(
+        map((tasks) => this.getTasksColor(tasks))
+      ))
+    ).subscribe((items) => {
       this.tasks = [...items];
     });
   }
 
   getTaskTitle(task: any) {
     return getTaskTitleByExpired(task);
+  }
+
+  getTasksColor(tasks: any) {
+    return tasks.map((task: any) => ({
+      ...task,
+      color: this.getTaskColor(task)
+    }))
   }
 
   getTaskColor(task: any) {
@@ -40,5 +54,10 @@ export class TaskListComponent {
 
   onOpenTask(taskId: any) {
     this.router.navigateByUrl(`/item/${taskId}`);
+  }
+
+  ngOnDestroy() {
+    this.onDestroy$.next(null);
+    this.onDestroy$.complete();
   }
 }
