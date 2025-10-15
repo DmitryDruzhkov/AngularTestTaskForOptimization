@@ -4,7 +4,7 @@
     <input matInput [formControl]="taskSearchFormControl" placeholder="Введите имя или описание задача" cdkFocusInitial>
   </mat-form-field>
 </form>
-<mat-card *ngFor="let task of tasks">
+<mat-card *ngFor="let task of tasks()">
   <mat-card-content>
     <mat-form-field class="example-full-width">
       <mat-label>Имя задачи</mat-label>

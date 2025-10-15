@@ -1,63 +1,72 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ViewEncapsulation,
+  inject,
+  effect,
+  signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatBadgeModule } from '@angular/material/badge';
 import { getTaskTitleByExpired } from '../../shared/task-helper';
-import { DataEntitieService } from '../../services/data.service';
+import { DataEntitieService, Task } from '../../services/data.service';
 import { TaskType } from '../../shared/constants';
-import { from, map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-task-list',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatBadgeModule,
+  ],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class TaskListComponent {
-  tasks: any[] = [];
-  onDestroy$: Subject<null> = new Subject();
+  private dataEntitieService = inject(DataEntitieService);
+  private router = inject(Router);
 
-  constructor(private dataEntitieService: DataEntitieService, private router: Router) {
-    this.dataEntitieService.tasks.pipe(
-      takeUntil(this.onDestroy$),
-      switchMap((tasks) => of(tasks).pipe(
-        map((tasks) => this.getTasksColor(tasks))
-      ))
-    ).subscribe((items) => {
-      this.tasks = [...items];
+  tasks = signal<Task[]>([]);
+
+  constructor() {
+    effect(() => {
+      const allTasks = this.dataEntitieService.tasks();
+      this.tasks.set(
+        allTasks.map((task) => ({
+          ...task,
+          color: this.getTaskColor(task),
+        }))
+      );
     });
   }
 
-  getTaskTitle(task: any) {
+  getTaskTitle(task: Task) {
     return getTaskTitleByExpired(task);
   }
 
-  getTasksColor(tasks: any) {
-    return tasks.map((task: any) => ({
-      ...task,
-      color: this.getTaskColor(task)
-    }))
-  }
-
-  getTaskColor(task: any) {
+  getTaskColor(task: Task): 'primary' | 'accent' | 'warn' {
     if (task.type === TaskType.BUG) {
-      return "warn";
+      return 'warn';
     } else if (task.type === TaskType.FEATURE) {
-      return "primary";
+      return 'primary';
     } else if (task.type === TaskType.TECH_DOLG) {
-      return "accent";
+      return 'accent';
     }
-    return "primary";
+    return 'primary';
   }
 
-  onDeleteTask(taskId: any) {
-    this.dataEntitieService.tasks.next(this.dataEntitieService.tasks.getValue().filter((item: any) => item.id !== taskId));
+  onDeleteTask(taskId: number) {
+    this.dataEntitieService.deleteTask(taskId);
   }
 
-  onOpenTask(taskId: any) {
+  onOpenTask(taskId: number) {
     this.router.navigateByUrl(`/item/${taskId}`);
-  }
-
-  ngOnDestroy() {
-    this.onDestroy$.next(null);
-    this.onDestroy$.complete();
   }
 }

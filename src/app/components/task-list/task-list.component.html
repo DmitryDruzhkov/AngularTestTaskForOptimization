@@ -1,7 +1,9 @@
-<mat-card *ngFor="let task of tasks">
+<!-- ISSUE 8: Missing trackBy function in *ngFor - causes unnecessary re-renders -->
+<mat-card *ngFor="let task of tasks()">
   <mat-card-content>
     <mat-form-field matBadge="!" matBadgePosition="before" [matBadgeColor]="task.color" class="example-full-width">
       <mat-label>Имя задачи</mat-label>
+      <!-- ISSUE 9: Calling method in template instead of using pre-computed value -->
       <input matInput placeholder="Имя задачи" [value]="getTaskTitle(task)">
     </mat-form-field>
     <mat-form-field class="example-full-width">
